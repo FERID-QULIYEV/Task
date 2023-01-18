@@ -4,18 +4,10 @@ namespace Pronia.ViewModels
 {
     public class CreateSliderVM
     {
-        public string Name { get; set; }
+        public string PrimaryTitle { get; set; }
+        public string SecondaryTitle { get; set; }
         public string Description { get; set; }
-        [Range(0.0, Double.MaxValue)]
-        public double CostPrice { get; set; }
-        [Range(0.0, Double.MaxValue)]
-        public double SellPrice { get; set; }
-        [Range(0, 100)]
-        public int Discount { get; set; }
-        public IFormFile CoverImage { get; set; }
-        public IFormFile? HoverImage { get; set; }
-        public ICollection<IFormFile>? OtherImages { get; set; }
-        public List<int> ColorIds { get; set; }
-        public List<int> SizeIds { get; set; }
+        public string ImageUrl { get; set; }
+        public int Order { get; set; }
     }
 }

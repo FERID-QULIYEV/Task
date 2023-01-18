@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "HkXHfvFNFxVHW4gEtiUXDKRtKNWRvBAQlk1x1jjut4Y=",
+  "Hash": "LHhKhDpJgPH7XwgMPjrEuwyN9U9UORw3NldRysD2Pqk=",
   "Source": "Pronia",
   "BasePath": "_content/Pronia",
   "Mode": "Default",
@@ -2072,6 +2072,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\brand\\1-5.png"
+    },
+    {
+      "Identity": "C:\\Users\\ca.r215.04\\Desktop\\Task\\Pronia\\wwwroot\\assets\\images\\brand\\3f362e38-2cd6-4fba-affe-ac727f7b2c35swoosh-logo-black.jfif",
+      "SourceId": "Pronia",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ca.r215.04\\Desktop\\Task\\Pronia\\wwwroot\\",
+      "BasePath": "_content/Pronia",
+      "RelativePath": "assets/images/brand/3f362e38-2cd6-4fba-affe-ac727f7b2c35swoosh-logo-black.jfif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\brand\\3f362e38-2cd6-4fba-affe-ac727f7b2c35swoosh-logo-black.jfif"
     },
     {
       "Identity": "C:\\Users\\ca.r215.04\\Desktop\\Task\\Pronia\\wwwroot\\assets\\images\\brand\\bg\\1-1170x300.jpg",

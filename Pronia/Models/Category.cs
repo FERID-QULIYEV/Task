@@ -5,5 +5,6 @@ namespace Pronia.Models
     public class Category : BaseData
     {
         public string Name { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

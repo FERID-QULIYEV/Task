@@ -48,5 +48,32 @@ namespace Pronia.Areas.Manage.Controllers
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-        }
+            public IActionResult Update(int? id)
+            {
+                if (id == null || id == 0) return BadRequest();
+                Brand brand = _context.Brands.Find(id);
+                if (brand is null) return NotFound();
+                return View(brand);
+            }
+            [HttpPost]
+            public IActionResult Update(int? id, Brand brand)
+            {
+                if (id == null || id == 0 || id != brand.Id || brand is null) return BadRequest();
+                if (!ModelState.IsValid) return View();
+                Brand exist = _context.Brands.Find(brand.Id);
+                exist.ImageUrl = brand.ImageUrl;
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+        public IActionResult Delete(int? id)
+            {
+                if (id is null) return BadRequest();
+
+                Brand brand = _context.Brands.Find(id);
+                if (brand is null) return NotFound();
+                _context.Brands.Remove(brand);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
     }
+}

@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using Pronia.Models;
 
 namespace Pronia.DAL
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext:/*IdentityDbContext*/DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -19,5 +20,7 @@ namespace Pronia.DAL
         public DbSet<ProductSize> ProductSizes { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Slider> Sliders { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Setting> Settings { get; set; }
     }
 }

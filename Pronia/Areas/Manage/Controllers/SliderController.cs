@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Pronia.DAL;
 using Pronia.Models;
 using Pronia.ViewModels;
@@ -7,7 +6,7 @@ using Pronia.ViewModels;
 namespace Pronia.Areas.Manage.Controllers
 {
     [Area("Manage")]
-    public class SliderController: Controller
+    public class SliderController : Controller
     {
         readonly AppDbContext _context;
         readonly IWebHostEnvironment _env;
@@ -18,35 +17,85 @@ namespace Pronia.Areas.Manage.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return View(_context.Sliders.OrderByDescending(s => s.Order));
         }
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Create(CreateBrandVM brandVm)
+        public IActionResult Create(CreateSliderVM sliderVM)
         {
-
             if (!ModelState.IsValid) return View();
-            IFormFile file = brandVm.ImageFile;
+            CheckOrder:
+            if (_context.Sliders.Any(s => s.Order == sliderVM.Order))
+            {
+                sliderVM.Order++;
+                goto CheckOrder;
+            }
+            while (_context.Sliders.Any(s => s.Order == sliderVM.Order))
+            {
+                sliderVM.Order++;
+            }
+            IFormFile file = sliderVM.Image;
             if (!file.ContentType.Contains("image/"))
             {
-                ModelState.AddModelError("Image", "Duzgun sekil yukle");
+                ModelState.AddModelError("Image", "Yuklediyiniz fayl shekil deyil");
                 return View();
             }
-            if (!(brandVm.ImageFile.Length / 1024 / 1024 < 2))
+            if (file.Length > 200 * 1024)
             {
-                ModelState.AddModelError("Image", "Sekilin hecmi 2mb-dan cox olmaz");
+                ModelState.AddModelError("Image", "Shekilin olcusu 200 kb-dan artiq ola bilmez");
                 return View();
             }
             string fileName = Guid.NewGuid() + file.FileName;
-            using (var stream = new FileStream(Path.Combine(_env.WebRootPath, "assets", "images", "brand", fileName), FileMode.Create))
+            using (var stream = new FileStream(Path.Combine(_env.WebRootPath, "assets", "images", "slider", fileName), FileMode.Create))
             {
                 file.CopyTo(stream);
             }
-            Brand brand = new Brand { ImageUrl = fileName };
-            _context.Brands.Add(brand);
+            Slider slider = new Slider { Description = sliderVM.Description, Order = sliderVM.Order, PrimaryTitle = sliderVM.PrimaryTitle, SecondaryTitle = sliderVM.SecondaryTitle, ImageUrl = fileName };
+            if (_context.Sliders.Any(s => s.Order == slider.Order))
+            {
+                ModelState.AddModelError("Order", $"{slider.Order} sirasinda artiq slider movcuddur");
+                return View();
+            }
+            _context.Sliders.Add(slider);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public IActionResult Update(int? id)
+        {
+            if (id == null || id == 0) return BadRequest();
+            Slider slider = _context.Sliders.Find(id);
+            if (slider is null) return NotFound();
+            return View(slider);
+        }
+        [HttpPost]
+        public IActionResult Update(int? id, Slider slider)
+        {
+            if (id == null || id == 0 || id != slider.Id || slider is null) return BadRequest();
+            if (!ModelState.IsValid) return View();
+            Slider anotherSlider = _context.Sliders.FirstOrDefault(s => s.Order == slider.Order);
+            if (anotherSlider != null)
+            {
+                anotherSlider.Order = _context.Sliders.Find(id).Order;
+            }
+            Slider exist = _context.Sliders.Find(slider.Id);
+            exist.Order = slider.Order;
+            exist.Description = slider.Description;
+            exist.PrimaryTitle = slider.PrimaryTitle;
+            exist.SecondaryTitle = slider.SecondaryTitle;
+            exist.ImageUrl = slider.ImageUrl;
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult Delete(int? id)
+        {
+            if (id is null) return BadRequest();
+
+            Slider slider = _context.Sliders.Find(id);
+            if (slider is null) return NotFound();
+            _context.Sliders.Remove(slider);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }

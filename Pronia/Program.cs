@@ -15,7 +15,7 @@ namespace Pronia
             app.UseRouting();
             app.MapControllerRoute(name: "areas", pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
             app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
-            app.MapControllerRoute(name: "Login_Register", pattern: "Login_Register", defaults: new { Controller = "Home", Action = "Login_Register" });
+            app.MapControllerRoute(name: "Login", pattern: "Login", defaults: new { Controller = "Home", Action = "Login" });
             app.MapControllerRoute(name: "Cart", pattern: "Cart", defaults: new { Controller = "Home", Action = "Cart" });
             app.MapControllerRoute(name: "Index", pattern: "Index", defaults: new { Controller = "Home", Action = "Index" });
             app.MapControllerRoute(name: "Index_2", pattern: "Index_2", defaults: new { Controller = "Home", Action = "Index_2" });

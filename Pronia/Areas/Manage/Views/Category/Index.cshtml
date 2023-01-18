@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in (Model ?? new List<Category>()))
             {
                 <tr>
                     <td>@item.Id</td>
@@ -25,4 +25,3 @@
         </tbody>
     </table>
 </div>
-

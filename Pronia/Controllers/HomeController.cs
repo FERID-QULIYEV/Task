@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        public IActionResult Login_Register()
+        public IActionResult Login()
         {
             return View();
         }
